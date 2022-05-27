@@ -23,4 +23,5 @@ target_link_libraries(driver_maestro
 
 # Set include directories for internal/external use.
 target_include_directories(driver_maestro PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${Boost_INCLUDE_DIRS})
