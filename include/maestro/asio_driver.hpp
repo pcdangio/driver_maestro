@@ -12,6 +12,7 @@
 
 namespace maestro {
 
+/// \brief A Boost::ASIO driver for the Pololu Maestro series of servo controllers.
 class asio_driver
     : public maestro::driver
 {
