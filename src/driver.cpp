@@ -20,10 +20,10 @@ driver::~driver()
 }
 
 // CONTROL
-void driver::start(const std::string& serial_port, uint32_t baud_rate)
+void driver::start(const std::string& serial_port, uint32_t baud_rate, double timeout)
 {
     // Open the serial port.
-    driver::open_serial(serial_port, baud_rate);
+    driver::open_serial(serial_port, baud_rate, timeout);
 
     // Try to transmit a single 0xAA delimiter to set up automatic baud rate detection.
     uint8_t delimiter = 0xAA;

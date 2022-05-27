@@ -33,14 +33,15 @@ public:
     /// \param device_number The device number of the Maestro to communicate with.
     /// \param crc_enabled A flag indicating if the Maestro is configured for CRC mode.
     driver(uint8_t device_number, bool crc_enabled = false);
-    ~driver();
+    virtual ~driver();
 
     // CONTROL
     /// \brief Starts the driver.
     /// \param serial_port The serial port to open.
     /// \param baud_rate The baud rate to use.
+    /// \param timeout The time (s) to wait for responses.
     /// \exception std::runtime_error if the driver fails to start.
-    void start(const std::string& serial_port, uint32_t baud_rate);
+    void start(const std::string& serial_port, uint32_t baud_rate, double timeout = 0.1);
     /// \brief Stops the driver.
     void stop();
 
@@ -89,9 +90,11 @@ protected:
     /// \brief Opens the serial port for communicating with the Maestro.
     /// \param serial_port The serial port to open.
     /// \param baud_rate The baud rate to use.
+    /// \param timeout The time (s) to wait for responses.
     /// \exception std::runtime_error if the port fails to open.
-    virtual void open_serial(const std::string& serial_port, uint32_t baud_rate) = 0;
+    virtual void open_serial(const std::string& serial_port, uint32_t baud_rate, double timeout) = 0;
     /// \brief Closes the serial port.
+    /// \exception std::runtime_error if the port fails to close.
     virtual void close_serial() = 0;
     /// \brief Transmits data to the Maestro through the serial port.
     /// \param data The data byte array to transmit.
