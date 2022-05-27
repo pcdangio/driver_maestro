@@ -3,3 +3,6 @@ build/
 
 # Ignore IDE files.
 .vscode/
+
+# Ignore doc files.
+doc/
