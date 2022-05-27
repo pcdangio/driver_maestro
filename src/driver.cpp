@@ -22,20 +22,20 @@ driver::~driver()
 // CONTROL
 void driver::start(const std::string& serial_port, uint32_t baud_rate, double timeout)
 {
-    // Open the serial port.
-    driver::open_serial(serial_port, baud_rate, timeout);
+    // Open the serial port through the derived class.
+    open_serial(serial_port, baud_rate, timeout);
 
     // Try to transmit a single 0xAA delimiter to set up automatic baud rate detection.
     uint8_t delimiter = 0xAA;
-    if(!driver::tx(&delimiter, 1))
+    if(!tx(&delimiter, 1))
     {
         throw std::runtime_error("error sending delimiter for baud rate detection");
     }
 }
 void driver::stop()
 {
-    // Stop the serial port.
-    driver::close_serial();
+    // Stop the serial port through the derived class.
+    close_serial();
 }
 
 // SET METHODS
@@ -123,9 +123,9 @@ uint16_t driver::get_position(uint8_t channel)
     // Send the message.
     driver::tx(0x10, data, 1);
 
-    // Read the response.
+    // Read the response through derived class.
     uint8_t response[2];
-    if(driver::rx(response, 2))
+    if(rx(response, 2))
     {
         // Deserialize response.
         return driver::deserialize(response, 0);
@@ -140,9 +140,9 @@ bool driver::get_moving_state()
     // Send the message.
     driver::tx(0x13, nullptr, 0);
 
-    // Read the response.
+    // Read the response through derived class.
     uint8_t response;
-    if(driver::rx(&response, 1))
+    if(rx(&response, 1))
     {
         // Deserialize response.
         return static_cast<bool>(response);
@@ -157,9 +157,9 @@ uint16_t driver::get_errors()
     // Send the message.
     driver::tx(0x21, nullptr, 0);
 
-    // Read the response.
+    // Read the response through the derived class.
     uint8_t response[2];
-    if(driver::rx(response, 2))
+    if(rx(response, 2))
     {
         // Deserialize response.
         return driver::deserialize(response, 0);
@@ -193,8 +193,8 @@ void driver::tx(uint8_t command, uint8_t *data, uint32_t data_length)
         packet[packet_length-1] = driver::checksum(packet, packet_length - 1);
     }
 
-    // Transmit the bytes via serial.
-    if(!driver::tx(packet, packet_length))
+    // Transmit the bytes through the derived class.
+    if(!tx(packet, packet_length))
     {
         throw std::runtime_error("failed to transmit command");
     }
