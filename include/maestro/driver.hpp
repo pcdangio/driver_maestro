@@ -33,7 +33,7 @@ public:
     /// \param device_number The device number of the Maestro to communicate with.
     /// \param crc_enabled A flag indicating if the Maestro is configured for CRC mode.
     driver(uint8_t device_number, bool crc_enabled = false);
-    virtual ~driver();
+    virtual ~driver(){}
 
     // CONTROL
     /// \brief Starts the driver.

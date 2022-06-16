@@ -13,11 +13,6 @@ driver::driver(uint8_t device_number, bool crc_enabled)
     uint32_t integer = 1;
     driver::m_little_endian = reinterpret_cast<uint8_t*>(&integer)[0];
 }
-driver::~driver()
-{
-    // Stop the driver if it's running.
-    driver::stop();
-}
 
 // CONTROL
 void driver::start(const std::string& serial_port, uint32_t baud_rate, double timeout)
