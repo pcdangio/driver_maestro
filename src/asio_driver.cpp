@@ -77,7 +77,10 @@ void asio_driver::close_serial()
     asio_driver::m_io_service.stop();
 
     // Join the IO service thread.
-    asio_driver::m_serial_thread.join();
+    if(asio_driver::m_serial_thread.joinable())
+    {
+        asio_driver::m_serial_thread.join();
+    }
 }
 
 // TX
